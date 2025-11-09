@@ -1,3 +1,4 @@
+#Python 3.10.0
 branca==0.8.2
 certifi==2025.10.5
 charset-normalizer==3.4.4
