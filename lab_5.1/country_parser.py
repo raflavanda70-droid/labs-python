@@ -9,7 +9,6 @@ URL = "https://geo.koltyrin.ru/eng_countries_of_the_world.php"
 CACHE_FILE = "cache_page.html"
 
 def load_page():
-    """Загружаем страницу либо из кэша, либо из интернета"""
     if os.path.exists(CACHE_FILE):
         try:
             with open(CACHE_FILE, "r", encoding="utf-8") as f:
@@ -29,11 +28,9 @@ def load_page():
         return None
 
 def normalize(name: str) -> str:
-    """Приводим название к нижнему регистру и убираем пробелы"""
     return name.lower().strip()
 
 def parse_data(country_list):
-    """Парсим таблицу и достаём данные по нужным странам"""
     html = load_page()
     if not html:
         return []
@@ -48,7 +45,7 @@ def parse_data(country_list):
     result = []
     norm_list = [normalize(c) for c in country_list]
 
-    for row in rows[1:]:  # пропускаем заголовок
+    for row in rows[1:]:
         cols = row.find_all("td")
         if len(cols) >= 4:
             country = cols[0].get_text(strip=True)
@@ -79,7 +76,7 @@ def main():
         sys.exit(1)
 
     data = parse_data(countries)
-    time.sleep(1)  # пауза между запросами
+    time.sleep(1)
 
     try:
         with open(output_file, "w", newline="", encoding="utf-8") as f:
